@@ -3,10 +3,6 @@ info:
   title: Fake NHL API
   description: Simulated NHL hockey game results API
   version: 1.0.0
-servers:
-  - url: http://localhost:3000
-    description: Development Server
-
 paths:
   /api/game-results/{date}:
     get:
@@ -31,48 +27,32 @@ paths:
                   properties:
                     homeTeam:
                       type: string
+                      description: The name of the home team
                     awayTeam:
                       type: string
-                    homeScore:
+                      description: The name of the away team
+                    homeTeamScore:
+                      type: array
+                      description: Scores for the home team in each period
+                      items:
+                        type: integer
+                    awayTeamScore:
+                      type: array
+                      description: Scores for the away team in each period
+                      items:
+                        type: integer
+                    finalHomeScore:
                       type: integer
-                    awayScore:
+                      description: The final score for the home team
+                    finalAwayScore:
                       type: integer
+                      description: The final score for the away team
                     periods:
                       type: integer
+                      description: The number of periods in the game
                     date:
                       type: string
                       format: date-time
-        '500':
-          description: Internal Server Error
-
-  /api/team-results/{teamName}:
-    get:
-      summary: Get the last 5 game results for a specific team (after 3 periods)
-      parameters:
-        - name: teamName
-          in: path
-          required: true
-          description: The name of the team for which game results are requested
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    homeTeam:
-                      type: string
-                    awayTeam:
-                      type: string
-                    resultAfterThirdPeriod:
-                      type: string
-                    date:
-                      type: string
-                      format: date-time
+                      description: The date and time of the game
         '500':
           description: Internal Server Error
